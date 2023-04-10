@@ -127,4 +127,3 @@ let g:airline_mode_map.i = 'Insert'
 let g:airline_mode_map.R = 'Replace'
 let g:airline_mode_map.v = 'Visual'
 let g:airline_mode_map.c = 'Command'
-
