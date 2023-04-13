@@ -1,17 +1,10 @@
-" =====================================================================================================================
+" =======================================================================================================================================
 
 " .vimrc Vim Config created by Neph Iapalucci
-"
-" To use this Vim configuration, follow the following steps:
-" 
-" 1. Install a patched font (Nerd Font) into your terminal if you havent already
-" 2. Run the following command: curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && curl -fLo ~/.vimrc https://raw.githubusercontent.com/NephIapalucci/.vimrc
-" 3. Open Vim (will give several errors) and run :PlugInstall
-" 4. Reload Vim
 
-" =======================================================================================================
-" Options ---------- Options ---------- Options ---------- Options ----------  Options ---------- Options ---------- Options ---------- Options
-" =======================================================================================================
+" ===================================================================================================================================
+" Options ---------- Options ---------- Options ---------- Options ----------  Options ---------- Options ---------- Options --------
+" ===================================================================================================================================
 
 " Here is where built-in Vim options are set to my liking.
 
@@ -34,30 +27,49 @@ set visualbell " Enable built-in flash when pressing invalid key (must enable to
 set wildmenu " Enable command-line completion
 set wildmode=longest,list " Set format of command-line help and completion
 
+" ===================================================================================================================================
+" Features ---------- Features ---------- Features ---------- Features ---------- Features ---------- Features ---------- Features --
+" ===================================================================================================================================
+
 filetype indent plugin on " Attempt to detect the language of a file by its contents/extension
 
-" ======================================================================================================
-" Plugins ---------- Plugins ---------- Plugins ---------- Plugins ---------- Plugins ---------- Plugins ----------
-" ======================================================================================================
+" ===================================================================================================================================
+" Mappings ---------- Mappings ---------- Mappings ---------- Mappings ---------- Mappings ---------- Mappings ---------- Mappings --
+" ===================================================================================================================================
+
+nnoremap <Tab> :bn<CR>| " Map <Tab> to switch between open buffers
+
+" ===================================================================================================================================
+" Plugins ---------- Plugins ---------- Plugins ---------- Plugins ---------- Plugins ---------- Plugins ---------- Plugins ---------
+" ===================================================================================================================================
 
 " Here is where plugins are installed using vim-plug.
 
 call plug#begin() " Begin plugin installation
 
+Plug 'dense-analysis/ale' " Linting & LSP Support
 Plug 'gelguy/wilder.nvim' " Suggestions when typing commands
 Plug 'joshdick/onedark.vim' " One Dark theme
 Plug 'preservim/nerdtree' " File Tree
 Plug 'ryanoasis/vim-devicons' " File tree icons
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Colored icons for file tree
 Plug 'tpope/vim-fugitive' " Git Integration
 Plug 'vim-airline/vim-airline' " Bottom Status Bar
 
 call plug#end() " Finish plugin installation
 
-" ============================================================================================================
-" Plugin Config ---------- Plugin Config ---------- Plugin Config ---------- Plugin Config ----------
-" ===========================================================================================================
+" ===================================================================================================================================
+" Plugin Config ---------- Plugin Config ---------- Plugin Config ---------- Plugin Config ---------- Plugin Config ---------- Plugin
+" ===================================================================================================================================
 
-" Here is where settings are configured for various plugins. 
+" Here is where settings are configured for various plugins.
+
+" dense-analysis/ale ----------------------------------------------------------------------------------------------------------------
+
+let g:ale_linters = {'rust': ['rustc', 'rls']}
+
+let g:ale_sign_error = '' " The error sign
+let g:ale_sign_warning = '' " The warning sign
 
 " gelguy/wilder.nvim -------------------------------------------------------------------------------------------------------------------------------
 
@@ -94,7 +106,7 @@ colorscheme onedark
 
 let NERDTreeMinimalUI = 1 " Remove tips from file tree
 let NERDTreeWinSize = 27 " Set width of file tree
-let NERDTreeShowHidden = 1 " Show hidden files (files beginning with a '.')
+let NERDTreeShowHidden = 1 " Show hidden files (beginning with '.')
 
 " Automatically open file tree upon starting Vim (and put the cursor back into the main window)
 autocmd VimEnter * NERDTree
@@ -111,6 +123,7 @@ augroup end
 
 " vim-airline/vim-airline ---------------------------------------------------------------------------------------------------------------------
 
+let g:airline#extensions#tabline#fnamemod = ':t' " Show only file name in tabline (not path)
 let g:airline_powerline_fonts=1 " Enable beveled status bar (instead of flat)
 
 " Define the symbol map if it doesn't exist
@@ -120,6 +133,8 @@ if !exists('g:airline_mode_map') | let g:airline_mode_map = {} | endif
 let g:airline#extensions#tabline#enabled=1 " Enable top bar tabs
 
 let g:airline_symbols.linenr = ' Line: ' " Set line number text to 'Line: '
+let g:airline_symbols.maxlinenr = '' " Remove character after line count
+let g:airline_section_z = airline#section#create(['windowswap', 'obsession', '%3p%%' , 'linenr', 'maxlinenr']) " Remove column number
 
 " Set mode names to camel case
 let g:airline_mode_map.n = 'Normal'
